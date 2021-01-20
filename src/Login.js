@@ -7,7 +7,7 @@ import {auth, provider} from './firebase'
 
 
 function Login(){
-    const [user, setUser] = useStateValue()
+    const {user, setUser} = useStateValue()
 
     const signIn = () => {
         auth.signInWithPopup(provider)

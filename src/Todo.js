@@ -19,35 +19,34 @@ import {useStateValue} from './StateProvider'
 
 }));
 
-function Todo({todo, types}){
+function Todo({todo}){
 
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const [inputName, setInputName] = useState(todo.name);
     const [type, setType] = useState(todo.type);
-    const [user] = useStateValue();
+    const {user} = useStateValue();
 
     const handleCompleteTaskChange = (e) => {
         e.preventDefault();
-        console.log('onClick', e);
-        console.log('onClick', e.target);
-        console.log('onClick', e.target.value);
         todo.completed=!todo.completed
         db.collection('todos').doc(user).collection('todos')
-            .doc(todo.id).set({completed: todo.completed}, {merge: true})
-    }
-
-    const handleChange_ = (e) => {
-        //e.preventDefault();
-        console.log('onChange', e);
-        console.log('onChange', e.target);
-        console.log('onChange', e.target.value);
+            .doc(todo.id).update({completed: todo.completed})
     }
 
     const updateTodo = () => {
-        console.log(`Updating task ${todo.id}`)
+        db.collection('types').where('name', '==', type.toLowerCase()).get()
+            .then(querySnapshot => {
+                if (querySnapshot.empty){
+                    db.collection('types')
+                        .add({
+                            name: type.toLowerCase(),
+                        })
+                }
+            })
+            .catch(error => console.log(error));
         db.collection('todos').doc(user).collection('todos')
-            .doc(todo.id).set({name: inputName, type: type}, {merge: true})
+            .doc(todo.id).update({name: inputName, type: type})
         setOpen(false);
     }
 
@@ -64,13 +63,11 @@ function Todo({todo, types}){
                 onClose={() => setOpen(false)}
             >
                 <div className={classes.paper}>
-
                     <Type
                         show_input={true}
-                        type={type}
-                        setType={setType}
-                        types={types}
-                        extra_types={[{name:''}]}
+                        extra_types={['']}
+                        value={type}
+                        setValue={setType}
                     />
                     Task:
                     <input
@@ -90,7 +87,7 @@ function Todo({todo, types}){
                 onChange={handleCompleteTaskChange}
                 checked={todo.completed}
             />
-            <label for={todo.id}>
+            <label htmlFor={todo.id}>
                 <h3 onClick={(e) => {e.preventDefault();setOpen(true)}}>{todo.name}</h3>
             </label>
             <button className='todo__delete' onClick={deleteTodo}>x</button>

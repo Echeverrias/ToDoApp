@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useStateValue} from './StateProvider';
-import Type from './Type';
+import SelectInputForm from './SelectInputForm';
 import './TodoList.css';
 import Todo from './Todo';
 import db from './firebase';
@@ -9,7 +9,7 @@ import firebase from 'firebase'
 
 function TodoList(){
 
-    const [user, todos, types, setTodos, setTypes] = useStateValue();
+    const {user, todos, setTodos} = useStateValue();
     const [filter, setFilter] = useState('all');
 
      useEffect(() => {
@@ -42,7 +42,7 @@ function TodoList(){
    const deleteCompletedTasks = (e) => {
         console.log('deleting')
         e.preventDefault();
-        let deletable_tasks = todos.filter((todo) => ((todo.type === filter) ||(filter === 'all')) && todo.completed);
+        let deletable_tasks = todos.filter((todo) => ((todo.type === filter) ||(filter === 'all') ||(filter === 'completed')) && todo.completed);
 
         deletable_tasks.forEach((todo) => {
             db.collection('todos').doc(user).collection('todos')
@@ -53,37 +53,35 @@ function TodoList(){
 
    const debug = (e) => {
     e.preventDefault();
-    console.log(db.collection('todos').doc('xxx'))
-    db.collection('todos').doc('debug').collection('todos')
-        .add({
-                todos:{
-                    name: 'zzz',
-                    type: 'prueba',
-                    completed: false,
-                    createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    array: ['a', 'b', 'c']
-                }
-        })
-   }
+    console.log('Debugging');
 
+   }
     return (
         <div className='todolist'>
         <button onClick={debug}>Debug</button>
         <div className='todolist__filter'>
-            <Type
-                show_input={false}
+            <SelectInputForm
+                id={'filter'}
                 label={'Filter'}
-                type={filter}
-                setType={setFilter}
-                types={types}
-                extra_types={[{name:'all'}, {name:'not completed'}]}
+                show_input={false}
+                options={[
+                    'all',
+                    'completed',
+                    'not completed',
+                    ...Array.from(new Set(todos.map(todo => todo.type))).sort(),
+                ]}
+                value={filter}
+                setValue={setFilter}
             />
         </div>
         <div className='todolist__list__tasks'>
             { todos.filter((todo) =>
-                (todo.type === filter) || (filter === 'not completed' && !todo.completed) ||(filter === 'all')
+                (todo.type === filter) ||
+                (filter === 'not completed' && !todo.completed) ||
+                (filter === 'completed' && todo.completed) ||
+                (filter === 'all')
               ).map((todo) =>
-                 <Todo key={todo.id} todo={todo} types={types}/>
+                 <Todo key={todo.id} todo={todo}/>
                )
             }
 

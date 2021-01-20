@@ -8,7 +8,7 @@ import Type from './Type'
 function TodoCreator(){
     const [taskName, setTaskName] = useState('');
     const [newType, setNewType] = useState('');
-    const [user, todos, types, setTodos, setTypes] = useStateValue();
+    const {user, todos, setTodos} = useStateValue();
 
     const handleChangeOnTask = (e) => setTaskName(e.target.value);
     const handleChangeOnType = (e) => setNewType(e.target.value);
@@ -18,8 +18,9 @@ function TodoCreator(){
        console.log('saveTask');
        console.log(e);
        console.log(e.target);
-       console.log(e.target?.name.value);
-       console.log(e.target?.type.value);
+       console.log('newType:', newType);
+       console.log('task name:', e.target?.name.value);
+       console.log('task type:', e.target?.type.value);
 
         db.collection('todos').doc(user).collection('todos')
         .add({
@@ -29,28 +30,34 @@ function TodoCreator(){
             createdTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
 
+        db.collection('types').where('name', '==', newType.toLowerCase()).get()
+            .then(querySnapshot => {
+                if (querySnapshot.empty){
+                    db.collection('types')
+                        .add({
+                            name: e.target.type.value.toLowerCase(),
+                        })
+                }
+            })
+            .catch(error => console.log(error));
+        /*
         if (newType && !types.includes(newType)){
             db.collection('types')
             .add({
                 name: e.target.type.value.toLowerCase(),
             })
         }
-
+        */
         setTaskName('')
         setNewType('')
 
-    }
-
-    const handleDebug = (e) => {
-        e.preventDefault();
-        console.log('types', types);
     }
 
     return (
         <div className='todocreator'>
             <form onSubmit={(e) => saveTask(e)}>
                 <div className='todocreator__section'>
-                    <label for='newTask'>New Task:</label>
+                    <label htmlFor='newTask'>New Task:</label>
                     <input
                         value={taskName}
                         onChange={handleChangeOnTask}
@@ -63,10 +70,9 @@ function TodoCreator(){
                 <div className='todocreator__section'>
                     <Type
                         show_input={true}
-                        type={newType}
-                        setType={setNewType}
-                        types={types}
-                        extra_types={[{name:''}]}
+                        extra_types={['']}
+                        value={newType}
+                        setValue={setNewType}
                     />
                 </div>
                 <button type='submit'>Add task</button>

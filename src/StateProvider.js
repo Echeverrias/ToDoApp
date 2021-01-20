@@ -12,7 +12,15 @@ export const StateProvider = ({children}) => {
 
 
     return (
-        <StateContext.Provider value={[user, todos, types, setTodos, setTypes]}>
+        <StateContext.Provider value={
+            {
+                user:user,
+                todos:todos,
+                types:types,
+                setTodos:setTodos,
+                setTypes: setTypes
+            }
+        }>
             {children}
         </StateContext.Provider>
     )

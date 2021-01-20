@@ -8,19 +8,12 @@ import db from './firebase'
 
 function App() {
 
- const [user, todos, types, setTodos, setTypes] = useStateValue();
+ const {user, setTypes} = useStateValue();
 
  useEffect(() => {
         const unsubscribe = db.collection('types').onSnapshot((snapshot) => {
-
-            setTypes(snapshot.docs.map((doc) => { return {
-               ...doc.data(),
-            }}).sort());
-               console.log('types: ', types);
-            }
-
-
-        );
+            setTypes(snapshot.docs.map((doc) => doc.data().name).sort());
+        });
 
         return () => {
             unsubscribe();
