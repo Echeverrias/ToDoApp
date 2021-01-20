@@ -38,22 +38,6 @@ function TodoList(){
         setFilter(e.target.value);
    }
 
-   const completeTask = (id) => {
-
-        console.log('completeTask: ', id)
-        let todo = null;
-        let index = undefined;
-        for(let i=0; i < todos.length; i++){
-            if (todos[i].id === id){
-                todo = todos[i];
-                index = i;
-                break;
-            }
-        }
-        todo = todos[index]
-        db.collection('todos').doc(user).collection('todos')
-            .doc(todo.id).set({completed: todo.completed}, {merge: true})
-   }
 
    const deleteCompletedTasks = (e) => {
         console.log('deleting')
@@ -99,7 +83,7 @@ function TodoList(){
             { todos.filter((todo) =>
                 (todo.type === filter) || (filter === 'not completed' && !todo.completed) ||(filter === 'all')
               ).map((todo) =>
-                 <Todo key={todo.id} todo={todo} types={types} handleCompletedTodo={completeTask}/>
+                 <Todo key={todo.id} todo={todo} types={types}/>
                )
             }
 

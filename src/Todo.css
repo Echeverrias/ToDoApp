@@ -6,3 +6,7 @@
 .todo h3{
     padding: 0.2em;
     }
+
+.todo__delete{
+    color: red;
+}

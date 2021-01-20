@@ -19,7 +19,7 @@ import {useStateValue} from './StateProvider'
 
 }));
 
-function Todo({todo, handleCompletedTodo, types}){
+function Todo({todo, types}){
 
     const classes = useStyles();
     const [open, setOpen] = useState(false);
@@ -27,13 +27,14 @@ function Todo({todo, handleCompletedTodo, types}){
     const [type, setType] = useState(todo.type);
     const [user] = useStateValue();
 
-    const handleChange = (e) => {
+    const handleCompleteTaskChange = (e) => {
         e.preventDefault();
         console.log('onClick', e);
         console.log('onClick', e.target);
         console.log('onClick', e.target.value);
         todo.completed=!todo.completed
-        handleCompletedTodo(e.target.value);
+        db.collection('todos').doc(user).collection('todos')
+            .doc(todo.id).set({completed: todo.completed}, {merge: true})
     }
 
     const handleChange_ = (e) => {
@@ -48,6 +49,11 @@ function Todo({todo, handleCompletedTodo, types}){
         db.collection('todos').doc(user).collection('todos')
             .doc(todo.id).set({name: inputName, type: type}, {merge: true})
         setOpen(false);
+    }
+
+    const deleteTodo = () => {
+        db.collection('todos').doc(user).collection('todos')
+            .doc(todo.id).delete()
     }
 
 
@@ -81,12 +87,13 @@ function Todo({todo, handleCompletedTodo, types}){
                 type="checkbox"
                 name={todo.name}
                 value={todo.id}
-                onChange={handleChange}
+                onChange={handleCompleteTaskChange}
                 checked={todo.completed}
             />
             <label for={todo.id}>
                 <h3 onClick={(e) => {e.preventDefault();setOpen(true)}}>{todo.name}</h3>
             </label>
+            <button className='todo__delete' onClick={deleteTodo}>x</button>
         </div>
     )
 }
