@@ -3,7 +3,7 @@ import './Type.css';
 import {useStateValue} from './StateProvider';
 import SelectInputForm from './SelectInputForm';
 
-function Type ({show_input, extra_types, value, setValue}){
+function Type ({show_input, defaultValue, extra_types, handleTypeChange}){
 
     const {types} = useStateValue();
     const id = 'type';
@@ -15,9 +15,9 @@ function Type ({show_input, extra_types, value, setValue}){
                 id={id}
                 label={label}
                 show_input={true}
+                defaultValue={defaultValue}
                 options={[...extra_types, ...types]}
-                value={value}
-                setValue={setValue}
+                handleValueChange={handleTypeChange}
             />
         </div>
     )

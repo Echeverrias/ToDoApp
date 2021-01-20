@@ -27,6 +27,10 @@ function Todo({todo}){
     const [type, setType] = useState(todo.type);
     const {user} = useStateValue();
 
+     const handleTypeChange = (e) => {
+        setType(e.target.value);
+    }
+
     const handleCompleteTaskChange = (e) => {
         e.preventDefault();
         todo.completed=!todo.completed
@@ -65,9 +69,9 @@ function Todo({todo}){
                 <div className={classes.paper}>
                     <Type
                         show_input={true}
+                        defaultValue={todo.type}
                         extra_types={['']}
-                        value={type}
-                        setValue={setType}
+                        handleTypeChange={handleTypeChange}
                     />
                     Task:
                     <input
