@@ -13,15 +13,11 @@ function TodoCreator(){
     const handleChangeOnTask = (e) => setTaskName(e.target.value);
     const handleChangeOnType = (e) => setNewType(e.target.value);
 
+    const handleTypeChange = (e) => {
+        setNewType(e.target.value);
+    }
     const saveTask = (e) => {
        e.preventDefault();
-       console.log('saveTask');
-       console.log(e);
-       console.log(e.target);
-       console.log('newType:', newType);
-       console.log('task name:', e.target?.name.value);
-       console.log('task type:', e.target?.type.value);
-
         db.collection('todos').doc(user).collection('todos')
         .add({
             name: e.target.name.value,
@@ -49,8 +45,6 @@ function TodoCreator(){
         }
         */
         setTaskName('')
-        setNewType('')
-
     }
 
     return (
@@ -71,8 +65,7 @@ function TodoCreator(){
                     <Type
                         show_input={true}
                         extra_types={['']}
-                        value={newType}
-                        setValue={setNewType}
+                        handleTypeChange={handleTypeChange}
                     />
                 </div>
                 <button type='submit'>Add task</button>

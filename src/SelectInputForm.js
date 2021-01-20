@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react';
 import db from './firebase';
 import './SelectInputForm.css';
 
-function SelectInputForm ({id, label, show_input, options, value, setValue}){
+function SelectInputForm ({id, label, show_input, placeholder, defaultValue, options, handleValueChange}){
 
-    const [input, setInput] = useState(value);
-    const [option, setOption] = useState(value);
+    const [input, setInput] = useState(defaultValue);
+    const [option, setOption] = useState(defaultValue);
 
     const handleInputChange = (e) => {
         setInput(e.target.value);
@@ -16,13 +16,13 @@ function SelectInputForm ({id, label, show_input, options, value, setValue}){
         else{
             setOption('');
         }
-        setValue(e.target.value);
+        handleValueChange(e);
     }
 
     const handleSelectChange = (e) => {
-        setInput(e.target.value)
-        setOption(e.target.value)
-        setValue(e.target.value)
+        setInput(e.target.value);
+        setOption(e.target.value);
+        handleValueChange(e);
     }
 
     return (

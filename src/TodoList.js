@@ -32,9 +32,7 @@ function TodoList(){
   // useEffect(() => setCurrentTodos(todos), []);
 
 
-   const handleChange = (e) => {
-        console.log('handleChange', e.target.value);
-        e.preventDefault();
+   const handleFilterChange = (e) => {
         setFilter(e.target.value);
    }
 
@@ -70,8 +68,7 @@ function TodoList(){
                     'not completed',
                     ...Array.from(new Set(todos.map(todo => todo.type))).sort(),
                 ]}
-                value={filter}
-                setValue={setFilter}
+                handleValueChange={handleFilterChange}
             />
         </div>
         <div className='todolist__list__tasks'>
