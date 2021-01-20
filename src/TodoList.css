@@ -1,0 +1,25 @@
+.todolist{
+    /*flex: 1;*/
+    max-height: 70vh;
+
+}
+
+.todolist__filter{
+    margin: 4px;
+    text-transform: capitalize;
+}
+
+.todolist__list__tasks{
+    padding: 3px;
+    margin: 3px;
+    max-height:55vh;
+    overflow: scroll;
+    background-color: #E7D085
+}
+
+.todolist__delete{
+    margin: auto;
+     text-align: center;
+}
+
+/*RGB 231, 208, 133 */
