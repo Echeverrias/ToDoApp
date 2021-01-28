@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './TodoCreator.css';
-import db from '../../firebase/firebase';
+import db from '../../firebase';
 import firebase from 'firebase';
 import {useStateValue} from '../StateProvider'
 import Type from '../Type/Type'

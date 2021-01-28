@@ -4,7 +4,7 @@ import TodoList from './components/TodoList/TodoList';
 import TodoCreator from './components/TodoCreator/TodoCreator';
 import Login from './components/Login/Login';
 import {useStateValue} from './components/StateProvider';
-import db from './firebase/firebase'
+import db from './firebase'
 
 function App() {
 

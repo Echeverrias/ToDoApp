@@ -3,8 +3,7 @@ import {useStateValue} from '../StateProvider';
 import SelectInputForm from '../SelectInputForm/SelectInputForm';
 import './TodoList.css';
 import Todo from './Todo/Todo';
-import db from '../../firebase/firebase';
-import firebase from 'firebase'
+import db from '../../firebase';
 
 
 function TodoList(){

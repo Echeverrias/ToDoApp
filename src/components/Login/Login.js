@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './Login.css'
 import {useStateValue} from '../StateProvider'
-import {auth, provider} from '../../firebase/firebase'
+import {auth, provider} from '../../firebase'
 
 
 
