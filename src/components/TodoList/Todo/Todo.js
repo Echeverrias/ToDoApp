@@ -3,9 +3,9 @@ import './Todo.css';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
-import db from './firebase';
-import Type from './Type'
-import {useStateValue} from './StateProvider'
+import db from '../../../firebase/firebase';
+import Type from '../../Type/Type'
+import {useStateValue} from '../../StateProvider'
 
  const useStyles = makeStyles((theme) => ({
         paper:{

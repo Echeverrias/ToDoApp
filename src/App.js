@@ -1,10 +1,10 @@
 import React , {useEffect} from 'react';
 import './App.css';
-import TodoList from './TodoList';
-import TodoCreator from './TodoCreator';
-import Login from './Login';
-import {useStateValue} from './StateProvider';
-import db from './firebase'
+import TodoList from './components/TodoList/TodoList';
+import TodoCreator from './components/TodoCreator/TodoCreator';
+import Login from './components/Login/Login';
+import {useStateValue} from './components/StateProvider';
+import db from './firebase/firebase'
 
 function App() {
 

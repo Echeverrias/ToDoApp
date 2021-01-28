@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import './TodoCreator.css';
-import db from './firebase';
+import db from '../../firebase/firebase';
 import firebase from 'firebase';
-import {useStateValue} from './StateProvider'
-import Type from './Type'
+import {useStateValue} from '../StateProvider'
+import Type from '../Type/Type'
 
 function TodoCreator(){
     const [taskName, setTaskName] = useState('');

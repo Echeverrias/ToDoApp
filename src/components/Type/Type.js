@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './Type.css';
-import {useStateValue} from './StateProvider';
-import SelectInputForm from './SelectInputForm';
+import {useStateValue} from '../StateProvider';
+import SelectInputForm from '../SelectInputForm/SelectInputForm';
 
 function Type ({show_input, defaultValue, extra_types, handleTypeChange}){
 

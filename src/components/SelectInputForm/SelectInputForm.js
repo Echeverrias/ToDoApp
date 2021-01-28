@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import db from './firebase';
 import './SelectInputForm.css';
 
 function SelectInputForm ({id, label, show_input, placeholder, defaultValue, options, handleValueChange}){
